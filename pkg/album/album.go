@@ -6,3 +6,9 @@ type Album struct {
 	Artist string
 	Rating int32
 }
+
+type AlbumInput struct {
+	Title  string
+	Artist string
+	Rating int32
+}

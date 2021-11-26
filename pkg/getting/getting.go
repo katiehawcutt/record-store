@@ -5,21 +5,14 @@ import (
 	"fmt"
 	"log"
 	"os"
+	a "test/pgx/pkg/album"
+	"test/pgx/pkg/format"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type Album struct {
-	Id     int32
-	Title  string
-	Artist string
-	Rating int32
-}
-
-func GetAlbums(dbpool *pgxpool.Pool) (albums []Album) {
-
-	var allAlbums []Album
-
+func GetAlbums(dbpool *pgxpool.Pool) (albums []string) {
+	var albumsToFormat []a.Album
 	const getAllAlbumsQuery = "SELECT * from public.album;"
 
 	rows, err := dbpool.Query(context.Background(), getAllAlbumsQuery)
@@ -31,33 +24,29 @@ func GetAlbums(dbpool *pgxpool.Pool) (albums []Album) {
 
 	for rows.Next() {
 		values, err := rows.Values()
-
 		if err != nil {
 			log.Fatal("error while iterating dataset")
 		}
 
-		a := Album{
+		a := a.Album{
 			Id:     values[0].(int32),
 			Title:  values[1].(string),
 			Artist: values[2].(string),
 			Rating: values[3].(int32),
 		}
 
-		allAlbums = append(allAlbums, a)
-
+		albumsToFormat = append(albumsToFormat, a)
 	}
-
-	return allAlbums
-
+	formattedAlbums := format.FormatAlbums(albumsToFormat)
+	return formattedAlbums
 }
 
-func GetAlbum(dbpool *pgxpool.Pool, albumId string) (album Album) {
-
+func GetAlbum(dbpool *pgxpool.Pool, albumId string) (album []string) {
 	var id int32
 	var title string
 	var artist string
 	var rating int32
-	var a Album
+	var albumToFormat []a.Album
 
 	const getAlbumByIdQuery = "SELECT * from public.album WHERE id = $1;"
 
@@ -68,13 +57,14 @@ func GetAlbum(dbpool *pgxpool.Pool, albumId string) (album Album) {
 		os.Exit(1)
 	}
 
-	a = Album{
+	a := a.Album{
 		Id:     id,
 		Title:  title,
 		Artist: artist,
 		Rating: rating,
 	}
 
-	return a
-
+	albumToFormat = append(albumToFormat, a)
+	formattedAlbum := format.FormatAlbums(albumToFormat)
+	return formattedAlbum
 }
