@@ -2,7 +2,7 @@
 
 ##### November 2021
 
-I started learning Go a few weeks ago and this is my first proper project using Go. I wanted to use it to get to grips with some basic CRUD operations using a Postgres DB and pgx (a Go toolkit for PostgreSQL). It runs in the terminal without any web interface or API's.
+I started learning Go a few weeks ago and this is my first proper project using Go. I wanted to use it to get to grips with some basic CRUD operations using a PostgreSQL database and `pgx` (a Go toolkit for PostgreSQL). It runs in the terminal without any web interface or API's.
 
 ## Main Learning Points:
 - how to structure a Go project
