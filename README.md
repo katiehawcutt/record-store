@@ -9,7 +9,7 @@ I started learning Go a few weeks ago and this is my first proper project using 
 - how [pgx](https://github.com/jackc/pgx) works / what it offers
 - tried out a validation library called [ozzo](https://github.com/go-ozzo/ozzo-validation)
 - how to use `os.Args` to access raw command-line arguments
-- how to access .env variables in the project
+- how to access env variables in the project
 - getting used to working with a strongly typed langauge
 - recapped on SQL (I didn't want to use an ORM)
 
@@ -19,7 +19,7 @@ I'm sure there are lots of improvements that could be made but it's a start!
 - Go
 
 ## Getting Started
-- Firstly you will need to create and connect to a Postgres DB and add your env variables to the `.env` file
+- Firstly you will need to create and connect to a PostgreSQL DB and add your env variables to the `.env` file
 - Make sure you are in the root of the project
 - Create the table - `psql nameOfYourDb -f ./db/scripts/create_table.sql`
 - Insert data to the table - `psql nameOfYourDb -f ./db/scripts/insert_data.sql`
