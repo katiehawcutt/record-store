@@ -7,7 +7,8 @@ I started learning Go a few weeks ago and this is my first proper project using 
 ## Main Learning Points:
 - how to structure a Go project
 - how [pgx](https://github.com/jackc/pgx) works / what it offers
-- tried out a validation library called [ozzo](https://github.com/go-ozzo/ozzo-validation)- how to use `os.Args` to access raw command-line arguments
+- tried out a validation library called [ozzo](https://github.com/go-ozzo/ozzo-validation)
+- how to use `os.Args` to access raw command-line arguments
 - how to access .env variables in the project
 - getting used to working with a strongly typed langauge
 - recapped on SQL (I didn't want to use an ORM)
