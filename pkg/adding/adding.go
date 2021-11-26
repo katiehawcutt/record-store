@@ -6,11 +6,19 @@ import (
 	"os"
 
 	a "test/pgx/pkg/album"
+	v "test/pgx/pkg/validator"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 func AddAlbum(dbpool *pgxpool.Pool, album a.AlbumInput) (message string) {
+
+	validationErr := v.ValidateAlbum(album)
+
+	if validationErr != nil {
+		fmt.Println(validationErr)
+		os.Exit(1)
+	}
 
 	const createAlbumQuery = `
 	INSERT INTO public.album(title, artist, rating)
