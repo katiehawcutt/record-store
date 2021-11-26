@@ -12,9 +12,10 @@ import (
 )
 
 func GetAlbums(dbpool *pgxpool.Pool) (albums []string) {
-	var albumsToFormat []a.Album
-	const getAllAlbumsQuery = "SELECT * from public.album;"
 
+	var albumsToFormat []a.Album
+
+	const getAllAlbumsQuery = "SELECT * from public.album ORDER BY id ASC;"
 	rows, err := dbpool.Query(context.Background(), getAllAlbumsQuery)
 
 	if err != nil {
@@ -25,7 +26,7 @@ func GetAlbums(dbpool *pgxpool.Pool) (albums []string) {
 	for rows.Next() {
 		values, err := rows.Values()
 		if err != nil {
-			log.Fatal("error while iterating dataset")
+			log.Fatal("Error while iterating dataset")
 		}
 
 		a := a.Album{
@@ -37,31 +38,22 @@ func GetAlbums(dbpool *pgxpool.Pool) (albums []string) {
 
 		albumsToFormat = append(albumsToFormat, a)
 	}
+
 	formattedAlbums := format.FormatAlbums(albumsToFormat)
 	return formattedAlbums
 }
 
-func GetAlbum(dbpool *pgxpool.Pool, albumId string) (album []string) {
-	var id int32
-	var title string
-	var artist string
-	var rating int32
+func GetAlbum(dbpool *pgxpool.Pool, albumId int32) (album []string) {
+
 	var albumToFormat []a.Album
+	var a a.Album
 
 	const getAlbumByIdQuery = "SELECT * from public.album WHERE id = $1;"
-
-	err := dbpool.QueryRow(context.Background(), getAlbumByIdQuery, albumId).Scan(&id, &title, &artist, &rating)
+	err := dbpool.QueryRow(context.Background(), getAlbumByIdQuery, albumId).Scan(&a.Id, &a.Title, &a.Artist, &a.Rating)
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
 		os.Exit(1)
-	}
-
-	a := a.Album{
-		Id:     id,
-		Title:  title,
-		Artist: artist,
-		Rating: rating,
 	}
 
 	albumToFormat = append(albumToFormat, a)

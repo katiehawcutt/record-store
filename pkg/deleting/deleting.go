@@ -8,10 +8,9 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-func DeleteAlbum(dbpool *pgxpool.Pool, albumId string) (message string) {
+func DeleteAlbum(dbpool *pgxpool.Pool, albumId int32) (message string) {
 
 	const deleteAlbumByIdQuery = "DELETE FROM public.album WHERE id = $1;"
-
 	commandTag, err := dbpool.Exec(context.Background(), deleteAlbumByIdQuery, albumId)
 
 	if err != nil {
